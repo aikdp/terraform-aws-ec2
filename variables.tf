@@ -15,3 +15,6 @@ variable "sg_group_id" {
     type = list(string)
 }
 
+variable "user_data"{
+    
+}
