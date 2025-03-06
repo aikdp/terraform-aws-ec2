@@ -12,55 +12,55 @@ VALIDATE(){
      fi
 }
 
-CHECK(){
-    if [ $USER_ID -ne 0 ]
-    then 
-        echo "Please Run this scirpt with ROOT previleges"
-        exit 1
-    fi
-}
-CHECK
+# CHECK(){
+#     if [ $USER_ID -ne 0 ]
+#     then 
+#         echo "Please Run this scirpt with ROOT previleges"
+#         exit 1
+#     fi
+# }
+# CHECK
 
 
 #install docker
-dnf -y install dnf-plugins-core
+sudo dnf -y install dnf-plugins-core
 VALIDATE $? "Installing Docker plugins"
  
-dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
 VALIDATE $? "Installing Docker Repo"
 
-dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 VALIDATE $? "Installing Docker Compose Plugins"
 
-systemctl start docker
+sudo systemctl start docker
 VALIDATE $? "Start Docker"
 
-usermod -aG docker ec2-user
+sudo usermod -aG docker ec2-user
 VALIDATE $? "User added in Docker group"
 
-docker run hello-world
+sudo docker run hello-world
 VALIDATE $? "Response from Docker"
 
-docker --version
+sudo docker --version
 VALIDATE $? "Displaying Docker Version"
 
 
 
 
 #Resize Disk
-lsblk
+sudo lsblk
 
-growpart /dev/nvme0n1 4
+sudo growpart /dev/nvme0n1 4
 VALIDATE $? "Disk Partition"
 
-lvextend -l +50%FREE /dev/RootVG/rootVol 
+sudo lvextend -l +50%FREE /dev/RootVG/rootVol 
 
 
-lvextend -l +50%FREE /dev/RootVG/varVol
-xfs_growfs /
+sudo lvextend -l +50%FREE /dev/RootVG/varVol
+sudo xfs_growfs /
 VALIDATE $? "Resize of RootVol"
 
-xfs_growfs /var
+sudo xfs_growfs /var
 VALIDATE $? "Resize of VarVol"
 
 
@@ -69,13 +69,13 @@ VALIDATE $? "Resize of VarVol"
 
 #install kubectl
 
-curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.31.3/2024-12-12/bin/linux/amd64/kubectl
+sudo curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.31.3/2024-12-12/bin/linux/amd64/kubectl
 
-chmod +x ./kubectl
+sudo chmod +x ./kubectl
 
-mv kubectl /usr/local/bin/kubcetl
+sudo mv kubectl /usr/local/bin/kubcetl
 
-kubectl version --client
+sudo kubectl version --client
 VALIDATE $? "Installion of Kubectl"
 
 #install eksctl
@@ -83,14 +83,14 @@ VALIDATE $? "Installion of Kubectl"
 ARCH=amd64
 PLATFORM=$(uname -s)_$ARCH
 
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
+sudo curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
 
 
-tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
+sudo tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
 
-mv /tmp/eksctl /usr/local/bin
+sudo mv /tmp/eksctl /usr/local/bin
 
-eksctl version
+sudo eksctl version
 VALIDATE $? "Installation of Eksctl"
 
 df -hT
