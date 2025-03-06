@@ -12,14 +12,14 @@ VALIDATE(){
      fi
 }
 
-# CHECK(){
-#     if [ $USER_ID -ne 0 ]
-#     then 
-#         echo "Please Run this scirpt with ROOT previleges"
-#         exit 1
-#     fi
-# }
-# CHECK
+CHECK(){
+    if [ $USER_ID -ne 0 ]
+    then 
+        echo "Please Run this scirpt with ROOT previleges"
+        exit 1
+    fi
+}
+CHECK
 
 
 #install docker
