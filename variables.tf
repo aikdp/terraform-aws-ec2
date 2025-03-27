@@ -18,3 +18,11 @@ variable "sg_group_id" {
 variable "user_data"{
     
 }
+
+variable "zone_id"{
+    default = "Z0873413X28XY5FKMLIP"
+}
+
+variable "domain_name"{
+    default = "telugudevops.online"
+}
