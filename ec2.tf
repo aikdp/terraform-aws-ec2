@@ -6,7 +6,7 @@ resource "aws_instance" "terraform" {
     # user_data = "${file("docker.sh")}"
     user_data = var.user_data
     tags = {
-        Name = "Terraform_server"
+        Name = var.instance_tag
     }
 
     root_block_device {
