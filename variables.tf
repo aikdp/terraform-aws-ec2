@@ -24,7 +24,7 @@ variable "zone_id"{
 }
 
 variable "domain_name"{
-    default = "telugudevops.online"
+    # default = "telugudevops.online"
 }
 
 variable "instance_tag"{
