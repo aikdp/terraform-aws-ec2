@@ -20,7 +20,7 @@ variable "user_data"{
 }
 
 variable "zone_id"{
-    default = "Z0873413X28XY5FKMLIP"
+    # default = "Z0873413X28XY5FKMLIP"    #old acc --kdpras
 }
 
 variable "domain_name"{
